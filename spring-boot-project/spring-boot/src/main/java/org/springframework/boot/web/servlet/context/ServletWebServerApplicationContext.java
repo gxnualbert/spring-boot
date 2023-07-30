@@ -159,6 +159,7 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 	protected void onRefresh() {
 		super.onRefresh();
 		try {
+			//在启动spring容器的时候，启动web服务，在createWebServer里面判断到底使用哪种服务器
 			createWebServer();
 		}
 		catch (Throwable ex) {
@@ -209,10 +210,12 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 		// Use bean names so that we don't consider the hierarchy
 		String[] beanNames = getBeanFactory().getBeanNamesForType(ServletWebServerFactory.class);
 		if (beanNames.length == 0) {
+			// 如果没有bean，抛出异常
 			throw new MissingWebServerFactoryBeanException(getClass(), ServletWebServerFactory.class,
 					WebApplicationType.SERVLET);
 		}
 		if (beanNames.length > 1) {
+			// 如果bean的个数大于1，也抛出异常
 			throw new ApplicationContextException("Unable to start ServletWebServerApplicationContext due to multiple "
 					+ "ServletWebServerFactory beans : " + StringUtils.arrayToCommaDelimitedString(beanNames));
 		}
