@@ -56,12 +56,12 @@ public @interface ConditionalOnWebApplication {
 		ANY,
 
 		/**
-		 * Only servlet-based web application will match.
+		 * Only servlet-based web application will match. 对应spring mvc
 		 */
 		SERVLET,
 
 		/**
-		 * Only reactive-based web application will match.
+		 * Only reactive-based web application will match. 对应响应式编程
 		 */
 		REACTIVE
 
