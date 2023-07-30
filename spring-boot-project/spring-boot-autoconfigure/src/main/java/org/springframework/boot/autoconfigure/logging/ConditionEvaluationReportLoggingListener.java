@@ -89,6 +89,7 @@ public class ConditionEvaluationReportLoggingListener
 
 	protected void onApplicationEvent(ApplicationEvent event) {
 		ConfigurableApplicationContext initializerApplicationContext = this.applicationContext;
+//		ContextRefreshedEvent是spring容器启动完之后的一个事件
 		if (event instanceof ContextRefreshedEvent) {
 			if (((ApplicationContextEvent) event).getApplicationContext() == initializerApplicationContext) {
 				logAutoConfigurationReport();

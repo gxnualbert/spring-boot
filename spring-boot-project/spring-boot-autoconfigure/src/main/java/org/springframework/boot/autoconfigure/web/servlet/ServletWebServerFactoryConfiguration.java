@@ -68,6 +68,16 @@ class ServletWebServerFactoryConfiguration {
 	@ConditionalOnMissingBean(value = ServletWebServerFactory.class, search = SearchStrategy.CURRENT)
 	static class EmbeddedTomcat {
 
+		/**
+		 * 入参相当于依赖
+		 * 当spring 创建这个bean的时候，发现有入参，那spring就会想办法去找对应的实例作为参数传入进来。参数里的ObjectProvider，表示参数connectorCustomizers可有可无，如果没有，就是null
+		 * 我们可以自定义入参中的三个bean，如果我们定义了，那spring会先解析我们定义的bean，然后才解析框架自己配置类
+		 *
+		 * @param connectorCustomizers
+		 * @param contextCustomizers
+		 * @param protocolHandlerCustomizers
+		 * @return
+		 */
 		@Bean
 		TomcatServletWebServerFactory tomcatServletWebServerFactory(
 				ObjectProvider<TomcatConnectorCustomizer> connectorCustomizers,
@@ -89,7 +99,7 @@ class ServletWebServerFactoryConfiguration {
 	 * Nested configuration if Jetty is being used.
 	 */
 	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnClass({ Servlet.class, Server.class, Loader.class, WebAppContext.class })
+	@ConditionalOnClass({Servlet.class, Server.class, Loader.class, WebAppContext.class})
 	@ConditionalOnMissingBean(value = ServletWebServerFactory.class, search = SearchStrategy.CURRENT)
 	static class EmbeddedJetty {
 
@@ -107,7 +117,7 @@ class ServletWebServerFactoryConfiguration {
 	 * Nested configuration if Undertow is being used.
 	 */
 	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnClass({ Servlet.class, Undertow.class, SslClientAuthMode.class })
+	@ConditionalOnClass({Servlet.class, Undertow.class, SslClientAuthMode.class})
 	@ConditionalOnMissingBean(value = ServletWebServerFactory.class, search = SearchStrategy.CURRENT)
 	static class EmbeddedUndertow {
 
@@ -117,7 +127,7 @@ class ServletWebServerFactoryConfiguration {
 				ObjectProvider<UndertowBuilderCustomizer> builderCustomizers) {
 			UndertowServletWebServerFactory factory = new UndertowServletWebServerFactory();
 			factory.getDeploymentInfoCustomizers()
-				.addAll(deploymentInfoCustomizers.orderedStream().collect(Collectors.toList()));
+					.addAll(deploymentInfoCustomizers.orderedStream().collect(Collectors.toList()));
 			factory.getBuilderCustomizers().addAll(builderCustomizers.orderedStream().collect(Collectors.toList()));
 			return factory;
 		}

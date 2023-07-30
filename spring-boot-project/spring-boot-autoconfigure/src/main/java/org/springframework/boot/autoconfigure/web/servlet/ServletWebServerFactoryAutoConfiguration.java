@@ -55,6 +55,8 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for servlet web servers.
  *
+ *  servlet web 服务器的自动配置
+ *
  * @author Phillip Webb
  * @author Dave Syer
  * @author Ivan Sopov
